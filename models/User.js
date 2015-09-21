@@ -14,11 +14,8 @@ var UserSchema = new mongoose.Schema({
 		lowercase: true
 	},
 	profilePic: String,
-	passwordHash: String,
-	salt: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "Salts"
-	},
+	password: String,
+	salt: String,
 	about: String,
 	albums: [{
 		type: mongoose.Schema.Types.ObjectId,
@@ -26,15 +23,18 @@ var UserSchema = new mongoose.Schema({
 	}]
 });
 
-UserSchema.methods.setPassword = function(password, salt) {
-	var passwordHash = crypto.pbkdf2Sync(password, salt, 1500, 64).toString('hex');
-	this.passwordHash = passwordHash
-};
+UserSchema.methods.setPassword = function(password) {
+	this.salt = crypto.randomBytes(16).toString('hex');
+	this.passwordHash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
+	/*var passwordHash = crypto.pbkdf2Sync(password, salt, 1500, 64).toString("hex");
+	this.passwordHash = passwordHash;*/
+}
 
-UserSchema.methods.checkPassword = function(password, salt) {
-	var checkPasswordHash = crypto.pbkdf2Sync(password, salt, 1500, 64).toString('hex');
-	return this.passwordHash === checkPasswordHash
-};
+UserSchema.methods.checkPassword = function(password) {
+//this.salt needs to be set and retrieved in the create user route to create user password
+var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
+return hash === this.passwordHash;
+}
 
 UserSchema.methods.generateJWT = function () {
 	var today = new Date();

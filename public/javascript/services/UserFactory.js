@@ -37,7 +37,7 @@
 		//---------Login, Register, Logout----------------------------------
 		o.register = function(user) {
 			var q = $q.defer();
-			$http.post('/api/user/register', user).success(funciton(res) {
+			$http.post('/api/user/register', user).success(function(res) {
 				q.resolve();
 			});
 			return q.promise;
@@ -45,10 +45,14 @@
 
 		o.login = function(user) {
 			var q = $q.defer();
+			
 			user.username = user.username.toLowerCase();
+			console.log('test1');
 			$http.post('/api/user/login', user).success(function(res) {
 				setToken(res.token);
+				console.log('test2');
 				$rootScope._user = isLoggedIn();
+				console.log('test3');
 				q.resolve();
 			});
 			return q.promise;

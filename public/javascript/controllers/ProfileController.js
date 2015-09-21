@@ -5,7 +5,7 @@
 
 	ProfileController.$inject = ['UserFactory', 'PictureFactory', 'HomeFactory', '$state', '$stateParams', '$rootScope'];
 
-	function ProfileController(UserFactory, PictureFactory, HomeFactory, $state, #stateParams, $rootScope) {
+	function ProfileController(UserFactory, PictureFactory, HomeFactory, $state, $stateParams, $rootScope) {
 		var vm = this;
 
 		if(!$stateParams.id) {
@@ -36,7 +36,7 @@
 			$state.go('Profile');
 		};
 
-		vm.createAlbum = function() { //do I need to pass in the user?
+		vm.createAlbum = function(addedBy) { //do I need to pass in the user?
 			UserFactory.createAlbum().then(function(res) {
 				$rootScope._album = res;
 				$state.go('') //create album and then picture either 'CreatePicture' or 'CreateAlbum'

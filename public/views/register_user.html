@@ -1,0 +1,20 @@
+<h1>Create New Profile</h1>
+<form class="well container" name="register" ng-submit="nav.register()">
+	<label>Your Name</label> <br/>
+	<input class="form-control" placeholder="Your Name..." ng-model="nav.user.name" required/>
+	<label>Username</label> <br/>
+	<input class="form-control" placeholder="Username..." ng-model="nav.user.username"  required/>
+	<label>Profile Image</label> <br/>
+	<input class="form-control" placeholder="Profile Image url..." ng-model="nav.user.profilePic"  required/>
+	<label>About</label> <br/>
+	<input class="form-control" placeholder="About..." ng-model="nav.user.about" required/>
+	<label>Email</label> <br/>
+	<input type="email" class="form-control" placeholder="Email..." ng-model="nav.user.email" required />
+	<label>Password</label> <br/>
+	<input type="password" class="form-control" placeholder="Password..." ng-model="nav.user.password" required/>
+	<label>Confirm Password</label> <br/>
+	<input type="password" class="form-control" placeholder="Confirm Password..." required /><br>
+	<div style="text-align: center;">
+		<button ng-disabled="register.$invalid" type="submit" class="btn btn-lg btn-success">Submit</button>
+	</div>
+</form>

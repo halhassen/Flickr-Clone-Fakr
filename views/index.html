@@ -4,34 +4,64 @@
 	<title>Fakr</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="bootstrap/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="/css/bootstrap_theme.css">
-	<!-- insert Google Fonts, mobile angular, and other css here-->
+	<!--<link rel="stylesheet" type="text/css" href="/css/bootstrap_theme.css">
+	<link rel="stylesheet" href="mobile-angular-ui/dist/css/mobile-angular-ui-hover.min.css" />
+	<link rel="stylesheet" href="mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css" />
+	<link rel="stylesheet" href="mobile-angular-ui/dist/css/mobile-angular-ui-desktop.min.css" />-->
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+	<!--<link rel="stylesheet" href="bower_components/angular-advanced-searchbox/dist/angular-advanced-searchbox.min.css"> search bar css-->
 	<link rel="stylesheet" type="text/css" href="/css/animate.css">
 	<link rel="stylesheet" type="text/css" href="/css/site.css">
 </head>
 <body>
-	<div ng-controller="NavBarController as nav">
-
-
-		<div class="navbar navbar-app navbar-absolute-top">
-
-
-			<div class="navbar-right title">
-				<a ui-sref="Home" >Fakr<!-- <img class="logo" src="http://i36.photobucket.com/albums/e25/kandianne/swinder_logo.png" height="50px" width="50px" alt="swinder_logo.png"/> -->&nbsp;&nbsp;&nbsp;&nbsp;</a>
+	<div ng-controller="NavBarController as nav" class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="nav nav-tabs">
+					<li class="active">
+						<a ui-sref="Home">Fakr</a>
+					</li>
+					<li ng-show="nav.loggedInUser">
+						<a ui-sref="Profile"><i class="fa fa-user"><span class="loggedInName"> {{nav.loggedInUser.username}}</span></i></a>
+					</li>
+					<li>
+						<a ui-sref="CreatePicture">Add Images</a>
+					</li>
+					<li ng-show="nav.loggedInUser"><a ng-click="nav.logout()">Logout</a></li>
+					<li ng-hide="nav.loggedInUser"><a ui-sref="Register">Register </a></li>
+					<li ng-hide="nav.loggedInUser"><a ui-sref="Login">Login</a></li>
+					<li class="dropdown pull-left">
+						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Dropdown<strong class="caret"></strong></a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="#">Action</a>
+							</li>
+							<li>
+								<a href="#">Another action</a>
+							</li>
+							<li>
+								<a href="#">Something else here</a>
+							</li>
+							<li class="divider">
+							</li>
+							<li>
+								<a href="#">Separated link</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
 			</div>
-
+		</div>
+	</div>
+	<div ng-controller="NavBarController as nav">
+		<div class="navbar navbar-app navbar-absolute-top">
 			<div class="loggedInNav navbar-left" ng-show="nav.loggedInUser">
 				<a ui-sref="Home"><i class="fa fa-home"></i></a>
 				<a ng-click="nav.logout();"><i class="fa fa-sign-out"></i></a>
 				<a ui-sref="Profile"><i class="fa fa-user"><span class="loggedInName"> {{nav.loggedInUser.username}}</span></i></a>
-
 			</div>
 			<div class="mobileNavMenu navbar-left">
-
-
 				<div ui-toggle="uiSidebarLeft" class="sidebar-toggle btn-group">
-
-
 					<a ui-turn-on='myDropdown'><i class="fa fa-bars"></i>Menu</a>
 					<ul style="a: black;" class="dropdown-menu relationOptions" ui-outer-click="Ui.turnOff('myDropdown')" ui-outer-click-if="Ui.active('myDropdown')"
 					role="menu" ui-show="myDropdown" ui-state="myDropdown"
@@ -47,29 +77,35 @@
 			</div>
 
 			<div class="navbar-right mobileTitle">
-				<a ui-sref="Home">Flickr Clone</a>
+				<a ui-sref="Home">Fakr</a>
 			</div>
-
-		</div>
-
-		<div class="messageBtn btn-group pull-right" ui-yield-to="navbarAction">
+			<div>
+				<nit-advanced-searchbox
+				ng-model="searchParams"
+				parameters="availableSearchParams"
+				placeholder="Search...">
+			</nit-advanced-searchbox>
 		</div>
 	</div>
-	<ui-view></ui-view>
-	<!-- Ext Libs -->
-	<script src="angular/angular.min.js"></script>
-	<script src="angular-ui-router/release/angular-ui-router.min.js"></script>
-	<!-- Global Src -->
-	<script src="/javascript/app.js"></script>
-	<!-- Factories -->
-	<script src="/javascript/services/HomeFactory.js"></script>
-	<script src="/javascript/services/UserFactory.js"></script>
-	<script src="/javascript/services/PictureFactory.js"></script>
-	<!-- Controllers -->
-	<script src="/javascript/controllers/HomeController.js"></script>
-	<script src="/javascript/controllers/ProfileController.js"></script>
-	<script src="/javascript/controllers/PictureController.js"></script>
-	<script src="/javascript/controllers/NavBarController.js"></script>
+
+	<div class="messageBtn btn-group pull-right" ui-yield-to="navbarAction">
+	</div>
+</div>
+<ui-view></ui-view>
+<!-- Ext Libs -->
+<script src="angular/angular.min.js"></script>
+<script src="angular-ui-router/release/angular-ui-router.min.js"></script>
+<!-- Global Src -->
+<script src="/javascript/app.js"></script>
+<!-- Factories -->
+<script src="/javascript/services/HomeFactory.js"></script>
+<script src="/javascript/services/UserFactory.js"></script>
+<script src="/javascript/services/PictureFactory.js"></script>
+<!-- Controllers -->
+<script src="/javascript/controllers/HomeController.js"></script>
+<script src="/javascript/controllers/ProfileController.js"></script>
+<script src="/javascript/controllers/PictureController.js"></script>
+<script src="/javascript/controllers/NavBarController.js"></script>
 
 </body>
 </html>

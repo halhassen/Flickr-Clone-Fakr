@@ -1,0 +1,48 @@
+body {
+	/*overflow-y:auto !important;*/
+	font-family: 'Open Sans Condensed', sans-serif;
+	background: linear-gradient(#b9fe7d, #36729e); /* Standard syntax */
+	text-align: center;
+
+
+}
+
+/* Portrait and Landscape */
+@media only screen and (max-width: 960px) {
+
+	.mobileNavMenu, .mobileTitle {
+		display: inline;
+	}
+
+	/*.mobileNavMenu a, .mobileTitle a {
+		margin-top: 30px;
+		}*/
+
+		.mobileTitle {
+			margin-top: 1.3em;
+			margin-left: 70%;
+			font-size: 2em;
+		}
+
+		.loggedInNav, .title {
+			display: none;
+		}
+
+		.well {
+			height: 80%;
+			width: 80%;
+		}
+
+		.well img {
+			height: 100px;
+			width: 100px;
+		}
+
+		.dropdownLink li {
+			background-color: red;
+		}
+
+	}
+
+
+

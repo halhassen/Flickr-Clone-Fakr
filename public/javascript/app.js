@@ -6,9 +6,7 @@
 	function Config($stateProvider, $urlRouterProvider) {
 		$stateProvider.state('Home',{
 			url: '/',
-			templateUrl: 'views/home.html',
-			controller: 'HomeController',
-			controllerAs: 'vm'
+			templateUrl: 'views/home.html'
 		}).state("Register", {
 			url: '/Register',
 			templateUrl: 'views/register_user.html',
@@ -20,7 +18,7 @@
 			controller: "ProfileController",
 			controllerAs: 'vm'
 		}).state('Albums', {
-			url: '/Albums'	
+			url: '/Albums',
 			templateUrl: 'views/albums.html',
 			controller: 'PictureController',
 			controllerAs: 'vm'

@@ -9,7 +9,6 @@ var passport = require('passport');
 require('./models/Picture');
 require('./models/Album');
 require('./models/User');
-require('./models/Salts');
 require('./config/passport');
 
 mongoose.connect('mongodb://localhost/flickrclone');
