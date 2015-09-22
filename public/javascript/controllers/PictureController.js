@@ -8,21 +8,24 @@
 	function PictureController($state, PictureFactory, $rootScope) {
 		var vm = this;
 		vm.picture = {};
+		vm.loggedInUser = $rootScope._user;
+		
 
-		vm.loadAlbums = function() {
-			PictureFactory.getAlbum().then(function(res) {
-				vm.loggedInUser = res.addedBy;
-				console.log(vm.loggedInUser);
-				vm.albumPictures = res.picture;
+		var getPictures = function() {	
+			PictureFactory.getPictures().then(function(res) {
+				vm.pictures = res;
+				console.log(res);
 			});
 		};
 
-		vm.postPicture = function() {
+		getPictures;
+
+		vm.postPicture = function(picture) {
 			vm.picture.createdDate = new Date();
 			vm.picture.addedBy = $rootScope._user.id;
-			vm.picture.albumId = $rootScope._album._id;
+			//vm.picture.albumId = $rootScope._album.id;*/
 			PictureFactory.postPicture(vm.picture).then(function(res) {
-				vm.loadAlbums();
+				getPictures();
 				delete vm.picture; //check this out later
 			});
 		};
@@ -31,12 +34,5 @@
 			vm.pictures.splice(vm.pictures.indexOf(picture), 1);
 			PictureFactory.deletePicture(picture);
 		};
-
-		vm.deleteAlbum = function(album) {
-			//hmmmmmmm
-		};
-
-		vm.loadAlbums();
-
 	}
 })();

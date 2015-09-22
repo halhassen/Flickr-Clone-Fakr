@@ -1,20 +1,22 @@
-<h1>Create New Profile</h1>
-<form class="well container" name="register" ng-submit="nav.register()">
+<div class="col-md-4"></div>
+<form style="margin-top: 50px;" class="well container col-md-4" name="register" ng-submit="vm.register()">
+	<h1>Create New Profile</h1>
 	<label>Your Name</label> <br/>
-	<input class="form-control" placeholder="Your Name..." ng-model="nav.user.name" required/>
+	<input class="form-control" placeholder="Your Name..." ng-model="vm.user.name" required/>
 	<label>Username</label> <br/>
-	<input class="form-control" placeholder="Username..." ng-model="nav.user.username"  required/>
+	<input class="form-control" placeholder="Username..." ng-model="vm.user.username"  required/>
 	<label>Profile Image</label> <br/>
-	<input class="form-control" placeholder="Profile Image url..." ng-model="nav.user.profilePic"  required/>
+	<input class="form-control" placeholder="Profile Image url..." ng-model="vm.user.profilePic"  required/>
 	<label>About</label> <br/>
-	<input class="form-control" placeholder="About..." ng-model="nav.user.about" required/>
+	<input class="form-control" placeholder="About..." ng-model="vm.user.about" required/>
 	<label>Email</label> <br/>
-	<input type="email" class="form-control" placeholder="Email..." ng-model="nav.user.email" required />
+	<input type="email" class="form-control" placeholder="Email..." ng-model="vm.user.email" required />
 	<label>Password</label> <br/>
-	<input type="password" class="form-control" placeholder="Password..." ng-model="nav.user.password" required/>
+	<input type="password" class="form-control" placeholder="Password..." ng-model="vm.user.password" required/>
 	<label>Confirm Password</label> <br/>
 	<input type="password" class="form-control" placeholder="Confirm Password..." required /><br>
 	<div style="text-align: center;">
 		<button ng-disabled="register.$invalid" type="submit" class="btn btn-lg btn-success">Submit</button>
 	</div>
 </form>
+<div class="col-md-4"></div>

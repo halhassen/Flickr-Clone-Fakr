@@ -6,7 +6,9 @@
 	function Config($stateProvider, $urlRouterProvider) {
 		$stateProvider.state('Home',{
 			url: '/',
-			templateUrl: 'views/home.html'
+			templateUrl: 'views/home.html',
+			controller: 'NavBarController',
+			controllerAs: 'vm'
 		}).state("Register", {
 			url: '/Register',
 			templateUrl: 'views/register_user.html',
@@ -30,6 +32,16 @@
 		}).state('CreatePicture', {
 			url: '/CreatePicture',
 			templateUrl: 'views/add_picture.html',
+			controller: 'PictureController',
+			controllerAs: 'vm'
+		}).state('EditProfile', {
+			url: '/EditProfile/:id', 
+			templateUrl: 'views/edit_profile.html',
+			controller: 'ProfileController',
+			controllerAs: 'vm'
+		}).state('EditPicture', {
+			url: '/EditPicture/:id',
+			templateUrl: 'views/edit_picture.html',
 			controller: 'PictureController',
 			controllerAs: 'vm'
 		});

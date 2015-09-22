@@ -18,8 +18,8 @@ router.param('id', function(req, res, next, id) {
 });
 
 //get all pictures
-router.post('/', function(req, res) {
-	User.findOne(req.body).populate('albums')
+/*router.post('/', function(req, res) {
+	User.findOne(req.body).populate('user')
 	.exec(function(err, result) {
 		if(err) return res.status(500).send({
 			err: "Error getting all pictures"
@@ -27,12 +27,12 @@ router.post('/', function(req, res) {
 			if(!result) return res.status(400).send({
 				err: "Messages don't exist"
 			});
-				res.send(result.albums)
+				res.send(result.user)
 			})
-});
+});*/
 
-router.post('/newPicture', auth, function(req, res) {
-	var picture = new Picture(req.body.actualPicture);
+router.post('/', auth, function(req, res) {
+	var picture = new Picture(req.body);
 	picture.save(function(err, pictureResult) {
 		if(err) return res.status(500).send({
 			err: "Issues with server"
@@ -40,7 +40,7 @@ router.post('/newPicture', auth, function(req, res) {
 			if(!pictureResult) return res.status(400).send({
 				err: "Could not post picture"
 			});
-				Album.update({_id: req.body.albumId}, {$push: {
+				User.update({_id: req.body.userId}, {$push: {
 					picture: {
 						_id: pictureResult._id
 					}
@@ -71,6 +71,20 @@ router.post('/album', function(req, res) {
 		if(err) return res.status(500).send({ err: 'Server error' });
 		if(!result) return res.status(400).send({ err: 'Server error' });;
 		res.send();
+	});
+});
+
+router.get('/:id', function(req, res) {
+	res.send(req.picture)
+});
+
+router.get('/', function(req, res) {
+	Picture.find({}).populate('user')
+	.exec(function(err, pictures) {
+		console.log(pictures);
+		if(err) return res.status(500).send({err: "error getting all pictures"});
+		if(!pictures) return res.status(500).send({err: "pictures do not exist"});
+		res.send(pictures);
 	});
 });
 

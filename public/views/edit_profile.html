@@ -1,0 +1,16 @@
+<form class="well container pageWell">
+	<h1>EDIT PROFILE</h1>
+	<label>Your Name</label> <br/>
+	<input class="form-control" placeholder="Your Name..." ng-model="vm.loggedInUser.name" />
+	<label>Username</label> <br/>
+	<input class="form-control" placeholder="Username..." ng-model="vm.loggedInUser.username"  />
+	<label>Profile Image</label> <br/>
+	<input class="form-control" placeholder="Profile Image url..." ng-model="vm.loggedInUser.profilePic"  />
+	<label>About</label> <br/>
+	<input class="form-control" placeholder="About..." ng-model="vm.loggedInUser.about"/>
+	<label>Email</label><br/>
+	<input type="email" class="form-control" placeholder="Email..." ng-model="vm.loggedInUser.email"   />
+	<div style="text-align: center;">
+		<button ng-click="vm.editProfile()">Finish Edit</button>
+	</div>
+</form>

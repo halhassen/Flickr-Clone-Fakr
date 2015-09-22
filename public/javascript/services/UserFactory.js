@@ -45,14 +45,10 @@
 
 		o.login = function(user) {
 			var q = $q.defer();
-			
 			user.username = user.username.toLowerCase();
-			console.log('test1');
 			$http.post('/api/user/login', user).success(function(res) {
 				setToken(res.token);
-				console.log('test2');
 				$rootScope._user = isLoggedIn();
-				console.log('test3');
 				q.resolve();
 			});
 			return q.promise;
@@ -78,7 +74,7 @@
 		//---------Getting User Data----------------------------------
 		o.getUserLoggedIn = function(id) {
 			var q = $q.defer();
-			$http.get('/api/user' + id).success(function(res) {
+			$http.get('/api/user/' + id).success(function(res) {
 				q.resolve(res);
 			});
 			return q.promise;
@@ -94,11 +90,17 @@
 
 		o.editProfile = function(edittedProfile) {
 			var q = $q.defer();
-			$http.put('/api/user' + edittedProfile._id, edittedProfile).success(function(res) {
+			$http.put('/api/user/' + edittedProfile._id, edittedProfile).success(function(res) {
 				q.resolve(res);
 				console.log(res);
 			});
 			return q.promise;
+		};
+
+		o.deleteUser = function(user) {
+			var q = $q.defer();
+			$http.delete('api/user/' + user._id).success(function(res) {
+			});
 		};
 
 		$rootScope._user = isLoggedIn();

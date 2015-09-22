@@ -42,7 +42,6 @@ router.param('id', function(req, res, next, id) {
 
 //get users
 router.get('/', function(req, res) {
-
 	var users = res;
 	User.find({})
 	.exec(function(err, users) {
@@ -70,6 +69,15 @@ router.put('/:id', function(req, res) {
 		if(!user) return res.status(400).send({err: "user profile isn't existing"});
 		res.send(user);
 		console.log("userroutes" + user)
+	});
+});
+
+router.delete('/:id', function(req, res) {
+	User.remove({_id: req._id})
+	.exec(function(err, user) {
+		if(err) return res.status(500).send({err: "Error with deleting the posts"});
+		if(!user) return res.status(400).send({err: "user does not exist!"});
+		res.send(user);
 	});
 });
 

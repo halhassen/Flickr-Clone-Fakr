@@ -7,7 +7,7 @@
 
 	function NavBarController($state, UserFactory, HomeFactory, $rootScope) {
 		var vm = this;
-		
+		vm.user = {};
 		vm.loggedInUser = $rootScope._user;
 
 		vm.register = function() {
@@ -17,12 +17,19 @@
 			});
 		};
 
+		var getUsers = function() {	
+			HomeFactory.getUsers().then(function(res) {
+				vm.users = res;
+				console.log(res);
+			});
+		};
+
 		vm.login = function() {
 			UserFactory.login(vm.user).then(function() {
-				console.log('con1');
 				vm.loggedInUser = $rootScope._user;
-				console.log('con2');
-				$state.go('Home')
+				$state.go('Home');
+				getUsers();
+
 			});
 		};
 
@@ -30,7 +37,8 @@
 			UserFactory.logout();
 			vm.loggedInUser = $rootScope._user;
 			delete vm.user;
-			$state.go('Home')
+			$state.go('Home');
+			getUsers();
 		};
 
 		vm.search = function() {

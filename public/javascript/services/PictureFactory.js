@@ -19,7 +19,7 @@
 
 		//---------------Album Functions---------------
 
-		o.createAlbum = function(addedById){
+		/*o.createAlbum = function(addedById){
 			var q = $q.defer();
 			$http.get('/api/album' + addedById + '|' + $rootScope._user.id).success(function(res) {
 				q.resolve(res);
@@ -43,11 +43,19 @@
 
 			});
 			return q.promise;
-		};	
+		};	*/
+
+		o.getPictures = function() {
+			var q = $q.defer();
+			$http.get('/api/picture/').success(function(res) {
+				q.resolve(res);
+			});
+			return q.promise;
+		};
 
 		o.getPicture = function(id) {
 			var q = $q.defer();
-			$http.get('api/picture' + id).success(function(res) {
+			$http.get('/api/picture/' + id).success(function(res) {
 				q.resolve(res);
 			});
 			return q.promise;
@@ -55,7 +63,7 @@
 
 		o.postPicture = function(picture){
 			var q = $q.defer();
-			$http.post('/api/picture/newPicture', {actualPicture: picture, albumId: $rootScope._album._id}, getAuth()).success(function(res) {
+			$http.post('/api/picture/', picture, getAuth()).success(function(res) {
 
 				q.resolve();
 			});
@@ -64,7 +72,7 @@
 
 		o.deletePicture = function(picture) {
 			var q = $q.defer();
-			$http.delete('api/picture/' + picture._id).success(function(res) {
+			$http.delete('/api/picture/' + picture._id).success(function(res) {
 			});
 		};
 

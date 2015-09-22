@@ -1,10 +1,23 @@
 body {
 	/*overflow-y:auto !important;*/
 	font-family: 'Open Sans Condensed', sans-serif;
-	background: linear-gradient(#b9fe7d, #36729e); /* Standard syntax */
+	background: fixed no-repeat linear-gradient(#b9fe7d, #36729e); /* Standard syntax */
 	text-align: center;
+}
 
+/* Enter Screen */
 
+.homePhoto {
+	height: 100px;
+}
+
+.pageWell {
+	margin-top: 100px;
+}
+
+/* Navbar */
+.navLogo {
+	height: 25px;
 }
 
 /* Portrait and Landscape */

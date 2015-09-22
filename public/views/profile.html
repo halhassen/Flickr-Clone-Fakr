@@ -1,0 +1,22 @@
+<div class="col-md-4"></div>
+<div class="well text-center col-md-4">
+	<p>
+		<img class="img img-circle" ng-src="{{vm.loggedInUser.profilePic}}" height='90px' width='90px'/>
+	</p>
+	<h2>{{vm.loggedInUser.name}}</h2>
+	<strong>Username:</strong> {{vm.loggedInUser.profilePic}}{{vm.loggedInUser.username}}</p>
+	<strong>Email:</strong> <p>{{vm.loggedInUser.email}}</p>
+	<strong>About:</strong> <p>{{vm.user.about}}</p>
+	<div>
+		<a type="btn" ng-click="vm.editProfile({id:vm.loggedInUser._id})" class="btn btn-sm info"><span class="glyphicon glyphicon-pencil"></span> Edit Profile </a>
+	</div>
+	
+</div>
+<div class="col-md-4"></div>
+
+<div ng-repeat="p in vm.pictures">
+	<h3>{{p.loggedInUser.user.pictureName}}</h3>
+	<p>{{p.picture.tags}}</p>	
+
+	<button type="btn" style="color: red;" ng-click="vm.deletePicture(picture)" class="btn btn-sm danger"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+</div>
