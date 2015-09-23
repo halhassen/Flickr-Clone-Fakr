@@ -12,12 +12,51 @@ var auth = jwt({
 	secret: '_secretdin'
 });
 
+//---------------Finding a single image and populating comments
 router.param('id', function(req, res, next, id) {
 	req._id = id;
 	next();
 });
 
-//get all pictures
+router.param('pictureId', function(req, res, next, id) {
+	req._id = id;
+	Picture.findOne({_id:id})
+	.populate({ path: "comments"})
+	.exec(function(err, comments) {
+		Picture.populate(comments, {
+			path: 'comments.createdBy', 
+			model: 'User',
+			select: "username profilePic"
+		}, function (err, picture) {
+			if(err) return res.status(500).send({err: "Error inside the server."});
+			if(!picture) return res.status(400).send({err: "That picture does not exist"});
+			req.Picture = picture;
+			next();
+		});
+
+	});
+});
+
+//----------------Push User ID into Picture addedBy property-------
+router.param('user', function(req, res, next, user) {
+	req._id = user;
+	next();
+});
+
+//-----------------Post Picture with addedBy UserID-----------------
+/*
+this was 2nd try
+router.post('/:user', auth, function(req, res) {
+	req.body.postedBy = req._id;
+	var newPicture = new Picture(req.body);
+	newPicture.created = new Date();
+	newPicture.save(function(err, result) {
+		if(err) return res.status(500).send({err: "The server is having issues."});
+		if(!result) return res.status(400).send({err: "Sorry! Could not create that picture."});
+		res.send();
+	});
+});*/
+
 /*router.post('/', function(req, res) {
 	User.findOne(req.body).populate('user')
 	.exec(function(err, result) {
@@ -31,6 +70,7 @@ router.param('id', function(req, res, next, id) {
 			})
 });*/
 
+//this works!
 router.post('/', auth, function(req, res) {
 	var picture = new Picture(req.body);
 	picture.save(function(err, pictureResult) {
@@ -63,35 +103,31 @@ router.post('/', auth, function(req, res) {
 			});
 });
 
-router.post('/album', function(req, res) {
-	console.log(req.body);
-	var album = new Album(req.body);
-	album.createdDate = new Date();
-	album.save(function(err, result) {
-		if(err) return res.status(500).send({ err: 'Server error' });
-		if(!result) return res.status(400).send({ err: 'Server error' });;
-		res.send();
+//---------------------Getting Picures------------------
+router.get('/', function(req, res) {
+	Picture.find({})
+	.populate({
+		path: "addedBy",
+		model: "User",
+		select: "username"
+	})
+	.exec(function(err, picture) {
+		if(err) return res.status(500).send({err: "error getting all picture"});
+		if(!picture) return res.status(400).send({err: "picture do not exist"});
+		res.send(picture);
 	});
 });
 
 router.get('/:id', function(req, res) {
-	res.send(req.picture)
-});
-
-router.get('/', function(req, res) {
-	Picture.find({}).populate('user')
-	.exec(function(err, pictures) {
-		console.log(pictures);
-		if(err) return res.status(500).send({err: "error getting all pictures"});
-		if(!pictures) return res.status(500).send({err: "pictures do not exist"});
-		res.send(pictures);
-	});
+	res.send(req.Picture) //or picture
 });
 
 //edit picture
 router.put('/:id', function(req, res) {
 	Picture.update({_id: req._id}, req.body)
-	.exec(function(err, result) {
+	.exec(function(err, picture) {
+		if(err) return res.status(500).send({err: "error getting picture to edit"});
+		if(!picture) return res.status(400).send({err: "Picture to edit aren't existing"});
 		res.send();
 	});
 });

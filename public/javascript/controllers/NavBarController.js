@@ -3,9 +3,9 @@
 	angular.module('app')
 	.controller('NavBarController', NavBarController);
 
-	NavBarController.$inject = ['$state', 'UserFactory', 'HomeFactory', '$rootScope'];
+	NavBarController.$inject = ['$state', '$stateParams', 'UserFactory', 'HomeFactory', 'PictureFactory', '$rootScope'];
 
-	function NavBarController($state, UserFactory, HomeFactory, $rootScope) {
+	function NavBarController($state, $stateParams, UserFactory, HomeFactory, PictureFactory, $rootScope) {
 		var vm = this;
 		vm.user = {};
 		vm.loggedInUser = $rootScope._user;
@@ -49,5 +49,19 @@
 			{ key: "tags", name: "Tags", placeholder: "Tags..." }
 			];
 		};
+
+		//add comment functionality here!
+
+		vm.createComment = function() {
+			var newComment = {
+				body: vm.newComment,
+				picture: $stateParams.id
+			};
+
+			UserFactory.createComment(comment).then(function(res) {
+				vm.newComment = " ",
+				vm.picture.comments.push(res);
+			})
+		}
 	};
 })();

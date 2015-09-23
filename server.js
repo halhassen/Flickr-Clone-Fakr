@@ -9,6 +9,7 @@ var passport = require('passport');
 require('./models/Picture');
 require('./models/Album');
 require('./models/User');
+require('./models/Comments');
 require('./config/passport');
 
 mongoose.connect('mongodb://localhost/flickrclone');
@@ -34,6 +35,7 @@ app.use(passport.initialize());
 var userRoutes = require('./routes/UserRoutes');
 var albumRoutes = require('./routes/AlbumRoutes');
 var pictureRoutes = require('./routes/PictureRoutes');
+var commentRoutes = require('./routes/CommentRoutes');
 
 //on homepage load, render the index page
 app.get('/', function(req, res) {
@@ -44,6 +46,7 @@ app.get('/', function(req, res) {
 app.use('/api/user', userRoutes);
 app.use('/api/picture', pictureRoutes);
 app.use('/api/album', albumRoutes);
+app.use('/api/comments', commentRoutes);
 //-----------------------------------------------------------------------------------------------------
 
 var server = app.listen(port, function() {

@@ -11,10 +11,11 @@
 	</div>
 	<!-- when logged in-->
 	<div ng-show="vm.loggedInUser">
-
 		<input type="search" ng-model="search" placeholder="Search..."/>
 		<div ng-repeat="vm in vm.user">
 			{{vm.user.username}}
+			<input class="form-control break" type="text" style="width: 200px; font-size: .8em; height: 75px;" ng-model="vm.comments.body" placeholder="Enter Your Comment Here..." required/>
+			<button ng-disabled="!vm.comments.body" ng-click="vm.createComment()" class="btn btn-lg btn-info">Slide It!</button>
 		</div>
 	</div>
 </div>

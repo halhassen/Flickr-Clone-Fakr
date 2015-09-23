@@ -56,7 +56,7 @@
 		};
 
 		vm.deleteUser = function(user) {
-			vm.user.splice(vm.user.indexOf(user), 1);
+			vm.users.splice(vm.users.indexOf(user), 1);
 			UserFactory.deleteUser(user);
 		};
 

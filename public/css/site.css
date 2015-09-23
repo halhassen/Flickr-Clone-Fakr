@@ -20,6 +20,13 @@ body {
 	height: 25px;
 }
 
+/* Comments */
+.break {
+	word-wrap: break-word;
+	word-break: break-word;
+	height: 80px;
+}
+
 /* Portrait and Landscape */
 @media only screen and (max-width: 960px) {
 
