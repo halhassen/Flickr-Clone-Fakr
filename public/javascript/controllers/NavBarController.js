@@ -3,11 +3,12 @@
 	angular.module('app')
 	.controller('NavBarController', NavBarController);
 
-	NavBarController.$inject = ['$state', '$stateParams', 'UserFactory', 'HomeFactory', 'PictureFactory', '$rootScope'];
+	NavBarController.$inject = ['$state', '$stateParams', 'UserFactory', 'HomeFactory', '$rootScope'];
 
-	function NavBarController($state, $stateParams, UserFactory, HomeFactory, PictureFactory, $rootScope) {
+	function NavBarController($state, $stateParams, UserFactory, HomeFactory, $rootScope) {
 		var vm = this;
 		vm.user = {};
+		vm.comment = {};
 		vm.loggedInUser = $rootScope._user;
 
 		vm.register = function() {
@@ -17,7 +18,7 @@
 			});
 		};
 
-		var getUsers = function() {	
+		vm.getUsers = function() {	
 			HomeFactory.getUsers().then(function(res) {
 				vm.users = res;
 				console.log(res);
@@ -28,7 +29,7 @@
 			UserFactory.login(vm.user).then(function() {
 				vm.loggedInUser = $rootScope._user;
 				$state.go('Home');
-				getUsers();
+				vm.getUsers();
 
 			});
 		};
@@ -37,8 +38,9 @@
 			UserFactory.logout();
 			vm.loggedInUser = $rootScope._user;
 			delete vm.user;
+			vm.getUsers();
 			$state.go('Home');
-			getUsers();
+			
 		};
 
 		vm.search = function() {
@@ -49,19 +51,5 @@
 			{ key: "tags", name: "Tags", placeholder: "Tags..." }
 			];
 		};
-
-		//add comment functionality here!
-
-		vm.createComment = function() {
-			var newComment = {
-				body: vm.newComment,
-				picture: $stateParams.id
-			};
-
-			UserFactory.createComment(comment).then(function(res) {
-				vm.newComment = " ",
-				vm.picture.comments.push(res);
-			})
-		}
 	};
 })();

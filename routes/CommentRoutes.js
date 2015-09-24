@@ -29,7 +29,7 @@ router.post('/', auth, function(req, res) {
 			Comment.findOne({ _id: result._id}).populate({
 				path: "addedBy",
 				model: "User",
-				select: "username profilePic"
+				select: "username profilePic comments"
 			})
 			.exec(function(err, comment) {
 				res.send(comment);

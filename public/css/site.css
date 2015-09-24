@@ -27,6 +27,11 @@ body {
 	height: 80px;
 }
 
+
+/* Pictures */
+.repeatPicture {
+	height: 100px;
+}
 /* Portrait and Landscape */
 @media only screen and (max-width: 960px) {
 

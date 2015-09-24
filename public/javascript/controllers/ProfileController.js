@@ -7,9 +7,21 @@
 
 	function ProfileController(UserFactory, PictureFactory, HomeFactory, $state, $stateParams, $rootScope) {
 		var vm = this;
-		vm.picture = [];
+		vm.picture = {};
 		vm.user = {};
 		vm.loggedInUser = $rootScope._user;
+
+		if($rootScope._user) {
+			UserFactory.getUserLoggedIn($rootScope._user.id).then(function(res) {
+				vm.loggedInUser= res;
+			});
+		};	
+
+		if($rootScope._user) {
+			PictureFactory.getPicture($rootScope._user.id).then(function(res) {
+				vm.picture = res;
+			});
+		};	
 
 		if(!$stateParams.id) {
 			$state.go('Profile');
@@ -31,14 +43,7 @@
 				console.log(res);
 			});
 		};
-
-		//checks if visitor is logged in
-
-		if($rootScope._user) {
-			UserFactory.getUserLoggedIn($rootScope._user.id).then(function(res) {
-				vm.userLoggedIn = res;
-			})
-		};
+		
 
 		//--------Editing-----------------------
 		vm.editProfile = function(user) {

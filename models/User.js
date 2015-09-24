@@ -20,6 +20,10 @@ var UserSchema = new mongoose.Schema({
 	picture: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Picture"
+	}],
+	comments: [{
+		type: mongoose.Schema.Types.ObjectId, 
+		ref: 'Comments'
 	}]
 });
 

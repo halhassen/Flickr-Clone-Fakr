@@ -75,7 +75,6 @@
 		o.postPicture = function(picture){
 			var q = $q.defer();
 			$http.post('/api/picture/', picture, getAuth()).success(function(res) {
-
 				q.resolve(res);
 			});
 			return q.promise;
@@ -92,7 +91,7 @@
 
 		o.editPicture = function(picture) {
 			var q = $q.defer();
-			$http.put('/api/picture' + picture._id, picture).success(function(res) {
+			$http.put('/api/picture/' + picture._id, picture).success(function(res) {
 				q.resolve(res);
 			});
 			return q.promise;

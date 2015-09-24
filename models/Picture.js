@@ -6,8 +6,7 @@ var PictureSchema = new mongoose.Schema({
 	createdDate: Date,
 	addedBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comments'}],
-	tags: [String] //check if this is correct?
-	//add album ref?
+	tags: [{type: String}] //check if this is correct?
 });
 
 mongoose.model('Picture', PictureSchema);

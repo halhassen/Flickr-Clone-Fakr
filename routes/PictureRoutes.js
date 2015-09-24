@@ -74,33 +74,30 @@ router.post('/:user', auth, function(req, res) {
 router.post('/', auth, function(req, res) {
 	var picture = new Picture(req.body);
 	picture.save(function(err, pictureResult) {
-		if(err) return res.status(500).send({
-			err: "Issues with server"
-		});
-			if(!pictureResult) return res.status(400).send({
-				err: "Could not post picture"
-			});
-				User.update({_id: req.body.userId}, {$push: {
-					picture: {
-						_id: pictureResult._id
-					}
-				}}, function(err, addedBy) {
-					if(err) return res.status(500).send({err: "There was an error"});
-					if(!addedBy) return res.status(400).send({err: "That shouldn't happen"});
-					Picture.findOne({_id: pictureResult._id})
-					.exec(function(err, picture) {
-						picture.populate({
-							path: 'addedBy',
-							model: 'User',
-							select: 'username'
-						}, function(err, populatedPicture) {
-							if(err) return res.status(500).send({err: "An error. Ah!"});
-							if(!populatedPicture) return res.status(400).send({err: "Shouldn't happen!"});
-							res.send(populatedPicture);
-						});
-					});
+		if(err) return res.status(500).send({err: "Issues with server"});
+		if(!pictureResult) return res.status(400).send({err: "Could not post picture"});
+		res.send();
+	/*	User.update({_id: req.body.userId}, {$push: {
+			picture: {
+				_id: pictureResult._id
+			}
+		}}, function(err, addedBy) {
+			if(err) return res.status(500).send({err: "There was an error"});
+			if(!addedBy) return res.status(400).send({err: "That shouldn't happen"});
+			Picture.findOne({_id: pictureResult._id})
+			.exec(function(err, picture) {
+				picture.populate({
+					path: 'addedBy',
+					model: 'User',
+					select: 'username'
+				}, function(err, populatedPicture) {
+					if(err) return res.status(500).send({err: "An error. Ah!"});
+					if(!populatedPicture) return res.status(400).send({err: "Shouldn't happen!"});
+					res.send(populatedPicture);
 				});
 			});
+});*/
+});
 });
 
 //---------------------Getting Picures------------------
@@ -109,7 +106,7 @@ router.get('/', function(req, res) {
 	.populate({
 		path: "addedBy",
 		model: "User",
-		select: "username"
+		select: "username picture"
 	})
 	.exec(function(err, picture) {
 		if(err) return res.status(500).send({err: "error getting all picture"});
@@ -119,7 +116,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/:id', function(req, res) {
-	res.send(req.Picture) //or picture
+	res.send(req.picture) //or picture
 });
 
 //edit picture
@@ -138,7 +135,7 @@ router.delete('/:id', function(req, res) {
 	.exec(function(err, picture) {
 		if(err) return res.status(500).send({err: "Error with deleting the posts"});
 		if(!picture) return res.status(400).send({err: "Picture does not exist!"});
-		res.send(picture);
+		res.send();
 	});
 });
 
