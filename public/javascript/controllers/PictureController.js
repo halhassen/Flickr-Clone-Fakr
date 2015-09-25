@@ -3,13 +3,12 @@
 	angular.module('app')
 	.controller('PictureController', PictureController);
 
-	PictureController.$inject = ['$state', 'PictureFactory', 'UserFactory', '$rootScope'];
+	PictureController.$inject = ['$state', 'PictureFactory', '$stateParams', 'UserFactory', '$rootScope'];
 
-	function PictureController($state, PictureFactory, UserFactory, $rootScope) {
+	function PictureController($state, PictureFactory, $stateParams, UserFactory, $rootScope) {
 		var vm = this;
 		vm.picture = {};
 		vm.loggedInUser = $rootScope._user;
-		
 
 		if($rootScope._user) {
 			UserFactory.getUserLoggedIn($rootScope._user.id).then(function(res) {
@@ -17,11 +16,23 @@
 			});
 		};	
 
+		if($stateParams.id) { //if the ID exists here, we go to the factory and find the specific pictures
+			PictureFactory.getPicture($stateParams.id).then(function(res) {
+				vm.picture = res;
+				vm.oldPicture = angular.copy(res);
+			});
+		};	
+
 		vm.getPictures = function() {	
 			PictureFactory.getPictures().then(function(res) {
 				vm.pictures = res;
-				console.log(res);
 			});
+		};
+		
+		vm.getPictureComment = function() {
+			PictureFactory.getPictureComment().then(function() {
+				vm.picture = res;
+			})
 		};
 
 		vm.getPictures();
@@ -32,15 +43,14 @@
 			PictureFactory.postPicture(vm.picture).then(function(res) {
 				vm.getPictures();
 				delete vm.picture;
-				console.log(vm.picture)
 			});
 		};
 
 		vm.editPicture = function(picture) {
-			$state.go('EditPicture');
-			PictureFactory.editPicture(picture).then(function(res) {
-
-			})
+			PictureFactory.editPicture(vm.oldPicture, vm.picture).then(function() {
+				$state.go('Home')
+				vm.getPictures();
+			});
 		};
 
 

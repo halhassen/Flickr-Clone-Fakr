@@ -27,6 +27,7 @@
 
 		vm.login = function() {
 			UserFactory.login(vm.user).then(function() {
+				console.log($rootScope._user);
 				vm.loggedInUser = $rootScope._user;
 				$state.go('Home');
 				vm.getUsers();
@@ -36,11 +37,9 @@
 
 		vm.logout = function() {
 			UserFactory.logout();
-			vm.loggedInUser = $rootScope._user;
+			vm.loggedInUser = false;
 			delete vm.user;
-			vm.getUsers();
 			$state.go('Home');
-			
 		};
 
 		vm.search = function() {

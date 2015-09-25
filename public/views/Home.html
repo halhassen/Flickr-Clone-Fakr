@@ -1,7 +1,7 @@
 <div>
 	<div class="col-md-4">
 	</div>
-	<div style="float: left;" ng-hide="vm.loggedInUser" class="well container pageWell col-md-4">
+	<div style="float: left;" ng-hide="nav.loggedInUser" class="well container pageWell col-md-4">
 		<img class="homePhoto" src="http://i.imgur.com/kuY6znv.png" /><br><br>
 		<p>Want a broken down, inexpensive way to upload photos instead of the better Flickr™? Then welcome to Fakr™!</p><br><br>
 		<button class="btn-primary btn btn-md" ui-sref="Register">Register</button>
@@ -10,7 +10,7 @@
 	<div class="col-md-4">
 	</div>
 	<!-- when logged in-->
-	<div ng-show="vm.loggedInUser">
+	<div ng-show="nav.loggedInUser">
 		<input type="search" ng-model="search" placeholder="Search..."/>
 		<div style="margin-top: 25px" ng-controller="PictureController as vm">
 			<div class="col-md-3" ng-repeat="picture in vm.pictures | orderBy: 'createdate': true">
@@ -18,7 +18,7 @@
 				<img class="repeatPicture img-rounded" ng-src="{{picture.picture}}"/><br>
 				<strong>{{picture.pictureName}}</strong> by <i>{{picture.addedBy.username}}</i><br>{{picture.createdDate | date:"M/d/yyyy hh:mma"}}<br>
 				<button ui-sref="Comments({id: picture._id})" class="btn btn-sm btn-info">Comments</button>
-				<button ng-show="picture.addedBy.username == _user.username" ng-click="vm.editPicture({id: picture._id})" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-cog"></span></button>
+				<button ng-show="picture.addedBy.username == _user.username" ui-sref="EditPicture({id: picture._id})" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-cog"></span></button>
 				<button ng-show="picture.addedBy.username == _user.username" class="btn btn-sm btn-danger" ng-click="vm.deletePicture(picture)"><span class="glyphicon glyphicon-remove"></span></button>
 			</div>
 		</div>

@@ -1,10 +1,10 @@
 <div class="col-md-4"></div>
-<form ng-hide="vm.loggedInUser" name="login" class="col-md-4 pageWell well container" ng-submit="vm.login()">
+<form ng-hide="nav.loggedInUser" name="login" class="col-md-4 pageWell well container" ng-submit="nav.login()">
 	<h2>Login</h2>
 	<br/>
-	<input class="form-control" placeholder="Username..." ng-model="vm.user.username" required/>
+	<input class="form-control" placeholder="Username..." ng-model="nav.user.username" required/>
 	<br/>
-	<input type="password" class="form-control" placeholder="Password..." ng-model="vm.user.password"  required/>
+	<input type="password" class="form-control" placeholder="Password..." ng-model="nav.user.password"  required/>
 	<br/>
 	<div style="text-align: center;">
 		<button ng-disabled="login.$invalid" class="btn btn-lg btn-success" type="submit">Enter Fakr</button>

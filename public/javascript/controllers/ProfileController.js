@@ -17,12 +17,6 @@
 			});
 		};	
 
-		if($rootScope._user) {
-			PictureFactory.getPicture($rootScope._user.id).then(function(res) {
-				vm.picture = res;
-			});
-		};	
-
 		if(!$stateParams.id) {
 			$state.go('Profile');
 		} else {

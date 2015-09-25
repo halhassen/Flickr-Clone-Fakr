@@ -14,22 +14,25 @@
 	<link rel="stylesheet" type="text/css" href="/css/site.css">
 </head>
 <body>
-	<div ng-hide="!nav.loggedInUser" ng-controller="NavBarController as nav" class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<ul class="nav nav-tabs">
-					<li class="active">
-						<a ui-sref="Home"><img class="navLogo" src="http://i.imgur.com/kuY6znv.png"/></a>
-					</li>
-					<li ng-show="nav.loggedInUser">
-						<a ui-sref="Profile"><i>{{nav.loggedInUser.username}}</i></a>
-					</li>
-					<li ng-hide="!nav.loggedInUser"><a ng-click="nav.logout()">Logout</a></li>
-				</ul>
+	<div ng-controller="NavBarController as nav">
+		<div ng-hide="!nav.loggedInUser" class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<ul class="nav nav-tabs">
+						<li class="active">
+							<a ui-sref="Home"><img class="navLogo" src="http://i.imgur.com/kuY6znv.png"/></a>
+						</li>
+						<li ng-show="nav.loggedInUser">
+							<a ui-sref="Profile"><i>{{nav.loggedInUser.username}}</i></a>
+						</li>
+						<li ng-hide="!nav.loggedInUser"><a ng-click="nav.logout()">Logout</a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
+		<ui-view></ui-view>
 	</div>
-	<ui-view></ui-view>
+	
 	<!-- Ext Libs -->
 	<script src="angular/angular.min.js"></script>
 	<script src="angular-ui-router/release/angular-ui-router.min.js"></script>

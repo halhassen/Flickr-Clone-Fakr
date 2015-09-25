@@ -10,26 +10,26 @@
 		</div>
 	</div>
 </div>
-<div ng-controller="PictureController as vm">
+<div ng-controller="PictureController as pm">
 	<div class="col-md-6"> <!--image creation-->
-		<form class="well container col-sm-12" ng-submit="vm.postPicture()">
+		<form class="well container col-sm-12" ng-submit="pm.postPicture()">
 			<h3>Add An Image</h3>
 			<label>Image Link: </label>
-			<input class="form-control" ng-model="vm.picture.picture" placeholder="Enter Image Link Here..." required/>
+			<input class="form-control" ng-model="pm.picture.picture" placeholder="Enter Image Link Here..." required/>
 			<label>Image Name</label>
-			<input class="form-control" ng-model="vm.picture.pictureName" placeholder="Enter Image Name Here..." required/>
+			<input class="form-control" ng-model="pm.picture.pictureName" placeholder="Enter Image Name Here..." required/>
 			<label>Tags: </label>
-			<input class="form-control" ng-model="vm.picture.tags" placeholder="Add Tags Here..."/><br>
+			<input class="form-control" ng-list ng-model="pm.picture.tags" placeholder="Add Tags Here..."/><br>
 			<button type="submit" class="btn btn-success btn-lg">Add Image</button>
 		</form>
 	</div>
 	<div style="clear: both;">
-		<div ng-show="picture.addedBy.username == _user.username" class="col-md-3" ng-repeat="picture in vm.pictures | orderBy: 'createdate': true">
+		<div ng-show="picture.addedBy.username == _user.username" class="col-md-3" ng-repeat="picture in pm.pictures | orderBy: 'createdate': true">
 			<img class="repeatPicture img-rounded" ng-src="{{picture.picture}}"/><br>
 			<strong>{{picture.pictureName}}</strong> <br>{{picture.createdDate | date:"M/d/yyyy hh:mma"}}<br>
 			<button ui-sref="Comments({id: picture._id})" class="btn btn-sm btn-info">Comments</button>
-			<button ng-show="picture.addedBy.username == _user.username" ng-click="vm.editPicture({id: picture._id})" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-cog"></span></button>
-			<button ng-show="picture.addedBy.username == _user.username" class="btn btn-sm btn-danger" ng-click="vm.deletePicture(picture._id)"><span class="glyphicon glyphicon-remove"></span></button>
+			<button ng-show="picture.addedBy.username == _user.username" ng-click="pm.editPicture({id: picture._id})" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-cog"></span></button>
+			<button ng-show="picture.addedBy.username == _user.username" class="btn btn-sm btn-danger" ng-click="pm.deletePicture(picture._id)"><span class="glyphicon glyphicon-remove"></span></button>
 		</div>
 	</div>
 </div>
