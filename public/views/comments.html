@@ -1,6 +1,25 @@
-<div style="margin-top: 25px">
-	<div class="col-md-3">
-		<img class="img-rounded" ng-src="{{vm.picture}}"/><br>
-		<strong>{{vm.picture.pictureName}}</strong> by <i>{{vm.addedBy.username}}</i><br>{{picture.createdDate | date:"M/d/yyyy hh:mma"}}<br>
+
+<div ng-controller="PictureController as vm">
+	<div style="margin-top: 25px">
+		<div>
+			<h1><strong>{{vm.picture.pictureName}}</strong></h1>
+			<img class="commentPicture img-rounded" ng-src="{{vm.picture.picture}}"/><br>
+			{{vm.picture.createdDate | date:"M/d/yyyy hh:mma"}}<br>
+		</div>
+	</div>
+</div>
+<div class="well container">
+	<div style="text-align:center;">
+		<button class="btn btn-lg btn-primary" ng-show="!addComment" ng-click="addComment = true;">Add Comment</button><br><br>
+		<div class="form-inline" ng-show="addComment">
+			<input class="form-control" style="width: 80%" ng-model="vm.newComment" placeholder="Comment...">
+			<button class="btn btn-success" ng-click="addComment = false; vm.createComment();">Submit</button>
+			<button class="btn btn-danger" ng-click="addComment = false;">Cancel</button>
+		</div>
+	</div>
+	<div class="well" style="float: left" ng-repeat="c in vm.comment | orderBy: 'createdate': true">
+		<strong>{{c.addedBy.username}}</strong> says:<br>{{c.body}}<br><small>{{c.created | date:"M/d/yyyy hh:mma"}}</small>
+		<br><button class="btn btn-sm btn-danger" style="margin-bottom: 15px;" ng-click="vm.deleteComment(c)"><span class="glyphicon glyphicon-remove"></span></button>
+		<button ng-show="comment.loggedInUser == _user.loggedInUser" ui-sref="EditComment({id: c._id})" class="btn btn-warning btn-sm" style="margin-bottom: 15px;"><span class="glyphicon glyphicon-cog"></span></button>
 	</div>
 </div>

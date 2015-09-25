@@ -13,13 +13,15 @@
 	<div ng-show="nav.loggedInUser">
 		<input type="search" ng-model="search" placeholder="Search..."/>
 		<div style="margin-top: 25px" ng-controller="PictureController as vm">
-			<div class="col-md-3" ng-repeat="picture in vm.pictures | orderBy: 'createdate': true">
+			<div class="well col-md-3" ng-repeat="picture in vm.pictures | orderBy: 'createdate': true">
 				<!--comments page for picture by clicking on it-->
 				<img class="repeatPicture img-rounded" ng-src="{{picture.picture}}"/><br>
 				<strong>{{picture.pictureName}}</strong> by <i>{{picture.addedBy.username}}</i><br>{{picture.createdDate | date:"M/d/yyyy hh:mma"}}<br>
-				<button ui-sref="Comments({id: picture._id})" class="btn btn-sm btn-info">Comments</button>
-				<button ng-show="picture.addedBy.username == _user.username" ui-sref="EditPicture({id: picture._id})" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-cog"></span></button>
-				<button ng-show="picture.addedBy.username == _user.username" class="btn btn-sm btn-danger" ng-click="vm.deletePicture(picture)"><span class="glyphicon glyphicon-remove"></span></button>
+				<button ui-sref="Comments({id: picture._id})" class="btn btn-sm btn-info">Comments</button> {{picture.comments.length}} comments<br>
+				<div style="margin-top: 10px;">
+					<button ng-show="picture.addedBy.username == _user.username" ui-sref="EditPicture({id: picture._id})" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-cog"></span></button>
+					<button ng-show="picture.addedBy.username == _user.username" class="btn btn-sm btn-danger" ng-click="vm.deletePicture(picture)"><span class="glyphicon glyphicon-remove"></span></button>
+				</div>
 			</div>
 		</div>
 	</div>

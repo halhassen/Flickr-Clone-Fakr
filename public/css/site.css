@@ -20,11 +20,15 @@ body {
 	height: 25px;
 }
 
-/* Comments */
 .break {
 	word-wrap: break-word;
 	word-break: break-word;
 	height: 80px;
+}
+
+/* Comments */
+.commentPicture {
+	height: 250px;
 }
 
 

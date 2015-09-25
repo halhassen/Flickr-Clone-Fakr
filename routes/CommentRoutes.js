@@ -12,30 +12,81 @@ var auth = jwt({
 	secret: '_secretdin'
 });
 
+router.param('commentsId', function(req, res, next, id) {
+	req._id = id;
+	Comment.findOne({_id: id})
+	.exec(function(err, comment) {
+		if(err) return res.status(500).send({err: "Error inside the server."});
+		if(!comment) return res.status(400).send({err: "That comment does not exist"});
+		req.Comment = comment;
+		next();
+	});
+});
+
+
+router.param('id', function(req, res, next, id) {
+	req._id = id;
+	next();
+});
+
+router.param('user', function(req, res, next, user) {
+	req._id = user;
+	next();
+});
+
+
+//-----------Get Calls--------------
+
 router.post('/', auth, function(req, res) {
 	var comment = new Comment(req.body);
 	comment.created = new Date();
-	comment.addedBy = req.payload.id;
-	comment.save(function(err, result) {
-		if(err) return res.status(500).send({err: "Server problem."});
-		if(!result) return res.status(400).send({err: "Comment could not be created"});
-		Picture.update({ _id: comment.picture}, {$push: {
-			comments: {
-				_id: result._id
-			}
-		}},function(err, picture) {
-			if(err) return res.status(500).send({err: "there was an error"});
-			if(!picture) return res.status(400).send({err: "this error should never happen"});
-			Comment.findOne({ _id: result._id}).populate({
-				path: "addedBy",
-				model: "User",
-				select: "username profilePic comments"
-			})
-			.exec(function(err, comment) {
-				res.send(comment);
-			})
-		})
-	})
+	comment.save(function(err, commentResult) {
+		if(err) return res.status(500).send({err: "Issues with server"});
+		if(!commentResult) return res.status(400).send({err: "Could not post comment"});
+		res.send();
+	});
 });
+
+router.get('/', function(req, res) {
+	Comment.find({})
+	.populate({
+		path: "addedBy",
+		model: "User",
+		select: "username"
+	})
+	.exec(function(err, comment) {
+		if(err) return res.status(500).send({err: "error getting all comments"});
+		if(!comment) return res.status(400).send({err: "comments do not exist"});
+		res.send(comment);
+	});
+});
+
+router.get('/:id', function(req, res) {
+	res.send(req.comment) 
+});
+
+router.get('/comments/:commentsId', function(req, res) {
+	res.send(req.Comment)
+});
+
+//---------------edit comment-----------
+router.put('/:id', function(req, res) {
+	Comment.update({_id: req._id}, req.body)
+	.exec(function(err, comment) {
+		if(err) return res.status(500).send({err: "error getting picture to edit"});
+		if(!comment) return res.status(400).send({err: "Picture to edit aren't existing"});
+		res.send(comment);
+	});
+});
+
+//delete a comment
+router.delete("/:id", function(req, res) {
+ 	Comment.remove({_id: req._id}) 	//_id is the property, req._id is the value
+ 	.exec(function(err, comment){
+ 		if(err) return res.status(500).send({err: "error with getting all comments"});
+ 		if(!comment) return res.status(400).send({err:"comments do not exist"});
+ 		res.send(comment);
+ 	});
+ });
 
 module.exports = router;

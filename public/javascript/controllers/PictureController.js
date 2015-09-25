@@ -29,12 +29,6 @@
 			});
 		};
 		
-		vm.getPictureComment = function() {
-			PictureFactory.getPictureComment().then(function() {
-				vm.picture = res;
-			})
-		};
-
 		vm.getPictures();
 
 		vm.postPicture = function(picture) {
@@ -59,19 +53,5 @@
 			PictureFactory.deletePicture(picture);
 		}; 
 
-		//-------------Comments----------------
-		vm.createComment = function() {
-			var newComment = {
-				body: vm.comment,
-				picture: $stateParams.id,
-				addedBy: vm.loggedInUser
-			};
-			console.log(newComment);
-			PictureFactory.createComment(vm.comment).then(function(res) {
-				vm.newComment = " ",
-				console.log(res);
-				//newComment.body.push(res);
-			})
-		}
 	}
 })();

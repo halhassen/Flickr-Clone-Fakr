@@ -20,15 +20,41 @@
 		//-------------Comments----------------
 		o.createComment = function(comment) {
 			var q = $q.defer();
-			$http.post('/api/comments', comment, getAuth()).success(function(res) {
+			$http.post('/api/comments/', comment, getAuth()).success(function(res) {
 				q.resolve(res);
 			});
 			return q.promise;
 		};
 
-		o.getPictureComment = function(id) {
+		o.getComment = function(id) {
 			var q = $q.defer();
-			$http.get('/api/picture/' + id).success(function(res) {
+			$http.get('/api/comments/' + id).success(function(res) {
+				q.resolve(res);
+			});
+			return q.promise;
+		};
+
+		o.getComments = function() {
+			var q = $q.defer();
+			$http.get('/api/comments/').success(function(res) {
+				q.resolve(res);
+			});
+			return q.promise;
+		};
+
+		o.editComment = function(oldComment, comment) {
+			var q = $q.defer();
+			$http.put('/api/comments/' + oldComment._id, comment).success(function(res) {
+				q.resolve(res);
+			});
+			return q.promise;
+		};
+
+		o.deleteComment = function(comment) {
+			var q = $q.defer();
+			console.log('1');
+			$http.delete('/api/comments/' + comment._id).success(function(res) {
+				console.log('2');
 				q.resolve(res);
 			});
 			return q.promise;
