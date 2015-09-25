@@ -44,6 +44,11 @@
 			templateUrl: 'views/edit_picture.html',
 			controller: 'PictureController',
 			controllerAs: 'vm'
+		}).state('Comments', {
+			url: '/Comments/:id',
+			templateUrl: 'views/comments.html',
+			controller: 'PictureController',
+			controllerAs: 'vm'
 		});
 		$urlRouterProvider.otherwise('/');
 	}

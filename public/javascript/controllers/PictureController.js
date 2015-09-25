@@ -46,7 +46,7 @@
 
 		vm.deletePicture = function(picture) {
 			vm.pictures.splice(vm.pictures.indexOf(picture), 1);
-			PictureFactory.deletePicture(vm.picture);
+			PictureFactory.deletePicture(picture);
 		}; 
 
 		//-------------Comments----------------
@@ -61,7 +61,6 @@
 				vm.newComment = " ",
 				console.log(res);
 				//newComment.body.push(res);
-				console.log(res + '2');
 			})
 		}
 	}

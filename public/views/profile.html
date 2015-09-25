@@ -26,7 +26,7 @@
 	<div style="clear: both;">
 		<div ng-show="picture.addedBy.username == _user.username" class="col-md-3" ng-repeat="picture in vm.pictures | orderBy: 'createdate': true">
 			<img class="repeatPicture img-rounded" ng-src="{{picture.picture}}"/><br>
-			<strong>{{picture.pictureName}}</strong> by <i></i><br>{{picture.createdDate | date:"M/d/yyyy hh:mma"}}<br>
+			<strong>{{picture.pictureName}}</strong> <br>{{picture.createdDate | date:"M/d/yyyy hh:mma"}}<br>
 			<button ui-sref="Comments({id: picture._id})" class="btn btn-sm btn-info">Comments</button>
 			<button ng-show="picture.addedBy.username == _user.username" ng-click="vm.editPicture({id: picture._id})" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-cog"></span></button>
 			<button ng-show="picture.addedBy.username == _user.username" class="btn btn-sm btn-danger" ng-click="vm.deletePicture(picture._id)"><span class="glyphicon glyphicon-remove"></span></button>
