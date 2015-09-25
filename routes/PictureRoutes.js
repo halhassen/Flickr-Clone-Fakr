@@ -20,7 +20,7 @@ router.param('pictureId', function(req, res, next, id) {
 	.populate({ path: "comments"})
 	.exec(function(err, comments) {
 		Picture.populate(comments, {
-			path: 'comments.createdBy', 
+			path: 'addedBy', 
 			model: 'User',
 			select: "username profilePic"
 		}, function (err, picture) {

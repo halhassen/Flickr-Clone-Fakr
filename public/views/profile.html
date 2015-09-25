@@ -24,7 +24,7 @@
 		</form>
 	</div>
 	<div style="clear: both;">
-		<div ng-show="picture.addedBy.username == _user.username" class="col-md-3" ng-repeat="picture in pm.pictures | orderBy: 'createdate': true">
+		<div ng-show="picture.addedBy.username == _user.username" class="well col-md-3" ng-repeat="picture in pm.pictures | orderBy: 'createdate': true">
 			<img class="repeatPicture img-rounded" ng-src="{{picture.picture}}"/><br>
 			<strong>{{picture.pictureName}}</strong> <br>{{picture.createdDate | date:"M/d/yyyy hh:mma"}}<br>
 			<button ui-sref="Comments({id: picture._id})" class="btn btn-sm btn-info">Comments</button>

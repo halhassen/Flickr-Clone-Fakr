@@ -20,6 +20,7 @@
 		if($stateParams.id) { //if the ID exists here, we go to the factory and find the specific pictures
 			PictureFactory.getComment($stateParams.id).then(function(res) {
 				vm.comment = res;
+				vm.oldComment = angular.copy(res);
 			});
 		};	
 		
@@ -28,7 +29,6 @@
 		vm.getComments = function() {
 			PictureFactory.getComments().then(function(res) {
 				vm.comment = res;
-				vm.oldComment = angular.copy(res);
 			})
 		};
 
@@ -41,23 +41,23 @@
 
 		vm.editComment = function(comment) {
 			PictureFactory.editComment(vm.oldComment, vm.comment).then(function() {
-				$state.go('Comments')
+				$state.go('Home');
 				vm.getComments();
 			});
 		};
-		
+
 		vm.createComment = function() {
 			var comment = {
-				body: vm.newComment,
+				body: vm.comment.body,
 				picture: $stateParams.id,
 				addedBy: vm.loggedInUser
 			};
-			console.log(comment);
 			PictureFactory.createComment(comment).then(function(res) {
-				vm.newComment = " ",
+				vm.comment.body = " ",
 				vm.getComments();
 				console.log(res);
-				//vm.picture.comments.push(res);
+				vm.comment.push(res);
+				console.log(vm.comment)
 			})
 		}
 	}

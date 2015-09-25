@@ -16,6 +16,7 @@
 			});
 		};	
 
+
 		if($stateParams.id) { //if the ID exists here, we go to the factory and find the specific pictures
 			PictureFactory.getPicture($stateParams.id).then(function(res) {
 				vm.picture = res;

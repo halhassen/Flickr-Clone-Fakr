@@ -42,9 +42,11 @@
 			return q.promise;
 		};
 
+
 		o.editComment = function(oldComment, comment) {
 			var q = $q.defer();
 			$http.put('/api/comments/' + oldComment._id, comment).success(function(res) {
+				console.log(comment);
 				q.resolve(res);
 			});
 			return q.promise;
@@ -52,9 +54,7 @@
 
 		o.deleteComment = function(comment) {
 			var q = $q.defer();
-			console.log('1');
 			$http.delete('/api/comments/' + comment._id).success(function(res) {
-				console.log('2');
 				q.resolve(res);
 			});
 			return q.promise;

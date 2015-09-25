@@ -12,28 +12,47 @@ var auth = jwt({
 	secret: '_secretdin'
 });
 
+//---------------Finding a single --------
+
 router.param('commentsId', function(req, res, next, id) {
 	req._id = id;
 	Comment.findOne({_id: id})
-	.exec(function(err, comment) {
-		if(err) return res.status(500).send({err: "Error inside the server."});
-		if(!comment) return res.status(400).send({err: "That comment does not exist"});
-		req.Comment = comment;
-		next();
+	.populate({ path: "picture"})
+	.exec(function(err, picture) {
+		Comment.populate(picture, {
+			path: 'picture', 
+			model: 'Picture',
+			select: "comments addedBy"
+		}, function (err, comment) {
+			if(err) return res.status(500).send({err: "Error inside the server."});
+			if(!comment) return res.status(400).send({err: "That comment does not exist"});
+			req.Comment = comment;
+			next();
+		});
 	});
 });
 
+router.get('/comments/:commentsId', function(req, res) {
+	res.send(req.Comment)
+});	
 
 router.param('id', function(req, res, next, id) {
-	req._id = id;
+	req._id = id;	
 	next();
 });
 
+router.get('/:id', function(req, res) {
+	res.send(req.comment) 
+});
 router.param('user', function(req, res, next, user) {
 	req._id = user;
 	next();
 });
 
+router.param('picture', function(req, res, next, picture) {
+	req._id = picture;
+	next();
+});
 
 //-----------Get Calls--------------
 
@@ -52,7 +71,7 @@ router.get('/', function(req, res) {
 	.populate({
 		path: "addedBy",
 		model: "User",
-		select: "username"
+		select: "username profilePic"
 	})
 	.exec(function(err, comment) {
 		if(err) return res.status(500).send({err: "error getting all comments"});
@@ -61,20 +80,15 @@ router.get('/', function(req, res) {
 	});
 });
 
-router.get('/:id', function(req, res) {
-	res.send(req.comment) 
-});
 
-router.get('/comments/:commentsId', function(req, res) {
-	res.send(req.Comment)
-});
+
 
 //---------------edit comment-----------
 router.put('/:id', function(req, res) {
 	Comment.update({_id: req._id}, req.body)
 	.exec(function(err, comment) {
-		if(err) return res.status(500).send({err: "error getting picture to edit"});
-		if(!comment) return res.status(400).send({err: "Picture to edit aren't existing"});
+		if(err) return res.status(500).send({err: "error getting comment to edit"});
+		if(!comment) return res.status(400).send({err: "Comment to edit doesn't exist"});
 		res.send(comment);
 	});
 });
@@ -82,7 +96,7 @@ router.put('/:id', function(req, res) {
 //delete a comment
 router.delete("/:id", function(req, res) {
  	Comment.remove({_id: req._id}) 	//_id is the property, req._id is the value
- 	.exec(function(err, comment){
+ 	.exec(function(err, comment) {
  		if(err) return res.status(500).send({err: "error with getting all comments"});
  		if(!comment) return res.status(400).send({err:"comments do not exist"});
  		res.send(comment);
