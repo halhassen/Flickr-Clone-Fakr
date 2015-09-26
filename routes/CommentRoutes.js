@@ -44,6 +44,7 @@ router.param('id', function(req, res, next, id) {
 router.get('/:id', function(req, res) {
 	res.send(req.comment) 
 });
+/*
 router.param('user', function(req, res, next, user) {
 	req._id = user;
 	next();
@@ -53,7 +54,7 @@ router.param('picture', function(req, res, next, picture) {
 	req._id = picture;
 	next();
 });
-
+*/
 //-----------Get Calls--------------
 
 router.post('/', auth, function(req, res) {
@@ -85,7 +86,8 @@ router.get('/', function(req, res) {
 
 //---------------edit comment-----------
 router.put('/:id', function(req, res) {
-	Comment.update({_id: req._id}, req.body)
+	console.log(req.body);
+	Comment.update({_id: req.body.id}, req.body)
 	.exec(function(err, comment) {
 		if(err) return res.status(500).send({err: "error getting comment to edit"});
 		if(!comment) return res.status(400).send({err: "Comment to edit doesn't exist"});

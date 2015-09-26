@@ -29,6 +29,7 @@
 		o.getComment = function(id) {
 			var q = $q.defer();
 			$http.get('/api/comments/' + id).success(function(res) {
+				console.log(res);
 				q.resolve(res);
 			});
 			return q.promise;
@@ -43,10 +44,10 @@
 		};
 
 
-		o.editComment = function(oldComment, comment) {
+		o.editComment = function(edit) {
 			var q = $q.defer();
-			$http.put('/api/comments/' + oldComment._id, comment).success(function(res) {
-				console.log(comment);
+			$http.put('/api/comments/' + edit.id, edit).success(function(res) {
+				console.log(edit);
 				q.resolve(res);
 			});
 			return q.promise;

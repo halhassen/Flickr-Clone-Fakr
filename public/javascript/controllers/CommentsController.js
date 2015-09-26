@@ -10,6 +10,7 @@
 		vm.picture = {};
 		vm.comment = {};
 		vm.loggedInUser = $rootScope._user;
+		vm.x = false;
 
 		if($rootScope._user) {
 			UserFactory.getUserLoggedIn($rootScope._user.id).then(function(res) {
@@ -39,9 +40,11 @@
 			PictureFactory.deleteComment(comment);
 		};
 
-		vm.editComment = function(comment) {
-			PictureFactory.editComment(vm.oldComment, vm.comment).then(function() {
-				$state.go('Home');
+		vm.editComment = function(id) {
+			vm.edit.id = id;
+			console.log(vm.edit);
+			PictureFactory.editComment(vm.edit).then(function() {
+				vm.edit = "";
 				vm.getComments();
 			});
 		};

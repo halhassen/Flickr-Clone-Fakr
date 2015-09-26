@@ -30,11 +30,6 @@
 			templateUrl: 'views/add_picture.html',
 			controller: 'PictureController',
 			controllerAs: 'vm'
-		}).state('EditProfile', {
-			url: '/EditProfile/:id', 
-			templateUrl: 'views/edit_profile.html',
-			controller: 'ProfileController',
-			controllerAs: 'vm'
 		}).state('EditPicture', {
 			url: '/EditPicture/:id',
 			templateUrl: 'views/edit_picture.html',
@@ -43,11 +38,6 @@
 		}).state('Comments', {
 			url: '/Comments/:id',
 			templateUrl: 'views/comments.html',
-			controller: 'CommentsController',
-			controllerAs: 'vm'
-		}).state('EditComment', {
-			url: '/EditComment/:id',
-			templateUrl: 'views/edit_comment.html',
 			controller: 'CommentsController',
 			controllerAs: 'vm'
 		});

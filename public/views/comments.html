@@ -4,6 +4,7 @@
 			<h1><strong>{{vm.picture.pictureName}}</strong></h1>
 			<img class="commentPicture img-rounded" ng-src="{{vm.picture.picture}}"/><br>
 			{{vm.picture.createdDate | date:"M/d/yyyy hh:mma"}}<br>
+			<span class="tags"><small>{{vm.picture.tags.join(", ")}}</small></span><br>
 		</div>
 	</div>
 </div>
@@ -19,6 +20,13 @@
 	<div class="well" style="float: left" ng-repeat="c in vm.comment | orderBy: 'createdate': true">
 		<img ng-src="{{c.addedBy.profilePic}}" class="img img-circle" style="height: 75px"/><br><strong>{{c.addedBy.username}}</strong> says:<br>{{c.body}}<br><small>{{c.created | date:"M/d/yyyy hh:mma"}}</small>
 		<br><button class="btn btn-sm btn-danger" style="margin-bottom: 15px;" ng-click="vm.deleteComment(c)"><span class="glyphicon glyphicon-remove"></span></button>
-		<button ng-show="comment.loggedInUser == _user.loggedInUser" ui-sref="EditComment({id: c._id})" class="btn btn-warning btn-sm" style="margin-bottom: 15px;"><span class="glyphicon glyphicon-cog"></span></button>
+		<button ng-show="comment.loggedInUser == _user.loggedInUser" ng-click="vm.x = true" class="btn btn-warning btn-sm" style="margin-bottom: 15px;"><span class="glyphicon glyphicon-cog"></span></button>
+		<div ng-show="vm.x" class="col-sm-4" >
+			<h2>Edit Comment</h2>
+			<input class="form-control" style="width: 200px; margin-bottom: 10px;" ng-model="vm.edit.body" placeholder="Edit Comment...">
+			<button ng-click="vm.editComment(c._id)" class="btn btn-success btn-lg">Edit Comment</button>
+			<button ng-click="vm.x=false" class="btn btn-lg btn-info">Cancel</button>
+		</div>
+		
 	</div>
 </div>
